@@ -21,6 +21,7 @@ public class ArrayListVsLinkedList {
     private List<Integer> arrayList;
     private List<Integer> linkedList;
     private int[] indices;
+    private int[] indicesRemoval;
 
     static void main() throws RunnerException {
         var options = new OptionsBuilder()
@@ -36,6 +37,10 @@ public class ArrayListVsLinkedList {
         indices = new int[size];
         for (int i = 0; i < size; i++) {
             indices[i] = random.nextInt(size);
+        }
+        indicesRemoval = new int[300];
+        for (int i = 0; i < indicesRemoval.length; i++) {
+            indicesRemoval[i] = random.nextInt(indicesRemoval.length);
         }
     }
 
@@ -168,5 +173,25 @@ public class ArrayListVsLinkedList {
             }
         }
         return count;
+    }
+
+    // Случайное удаление из ArrayList
+    @Benchmark
+    public int f_testArrayListRandomRemoval() {
+        int sum = 0;
+        for (int index : indicesRemoval) {
+            sum += arrayList.remove(index); // O(N) из-за копирования хвоста, на небольшом размере обгоняет LinkedList
+        }
+        return sum;
+    }
+
+    // Случайное удаление из LinkedList
+    @Benchmark
+    public int f_testLinkedListRandomRemoval() {
+        int sum = 0;
+        for (int index : indicesRemoval) {
+            sum += linkedList.remove(index); // O(N) из-за перехода до индекса
+        }
+        return sum;
     }
 }
