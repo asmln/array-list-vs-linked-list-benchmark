@@ -52,7 +52,7 @@ public class ArrayListVsLinkedList {
 
     // Наполнение ArrayList с постоянным расширением
     @Benchmark
-    public List<Integer> a_testArrayListAdd() {
+    public List<Integer> a1_testArrayListAdd() {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(i); // 👍 O(1) амортизированно
@@ -60,9 +60,19 @@ public class ArrayListVsLinkedList {
         return result;
     }
 
+    // Наполнение ArrayList с правильно заданным размером
+    @Benchmark
+    public List<Integer> a2_testSizedArrayListAdd() {
+        List<Integer> result = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            result.add(i); // 👍 O(1)
+        }
+        return result;
+    }
+
     // Наполнение LinkedList
     @Benchmark
-    public List<Integer> a_testLinkedListAdd() {
+    public List<Integer> a1_testLinkedListAdd() {
         List<Integer> result = new LinkedList<>();
         for (int i = 0; i < size; i++) {
             result.add(i); // 👎 O(1)
